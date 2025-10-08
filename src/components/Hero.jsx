@@ -9,7 +9,7 @@ export const Hero = ({ darkMode, scrollToSection }) => {
           <div className="profile-image-container">
             <img
               src="/Profile_Photo.jpg"
-              alt="Profile"
+ww              alt="Profile"
               className="w-full h-full object-cover"
             />
           </div>

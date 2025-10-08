@@ -16,7 +16,7 @@ import { ProjectModal } from './ProjectModal';
 
 export default function Portfolio() {
   const { darkMode, toggleDarkMode } = useDarkMode();
-  const { projects, loading } = useProjects();
+  const { projects, loading, error } = useProjects();
   const { activeSection, scrollToSection } = useActiveSection();
   const { formData, setFormData, formStatus, handleSubmit } = useContactForm();
   const [selectedProject, setSelectedProject] = useState(null);
@@ -40,7 +40,8 @@ export default function Portfolio() {
       <Projects 
         darkMode={darkMode} 
         projects={projects} 
-        loading={loading} 
+        loading={loading}
+        error={error}
         onProjectClick={setSelectedProject} 
       />
       <Contact 

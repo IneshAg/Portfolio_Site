@@ -1,7 +1,7 @@
 import React from 'react';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Star, GitFork } from 'lucide-react';
 
-export const Projects = ({ darkMode, projects, loading, onProjectClick }) => {
+export const Projects = ({ darkMode, projects, loading, error, onProjectClick }) => {
   return (
     <section id="projects" className="py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
@@ -14,6 +14,22 @@ export const Projects = ({ darkMode, projects, loading, onProjectClick }) => {
         {loading ? (
           <div className="text-center">
             <div className="spinner"></div>
+            <p className={`mt-4 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+              Loading projects from GitHub...
+            </p>
+          </div>
+        ) : error ? (
+          <div className="text-center">
+            <p className="text-red-500 mb-4">Failed to load projects: {error}</p>
+            <p className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
+              Please check your internet connection or try again later.
+            </p>
+          </div>
+        ) : projects.length === 0 ? (
+          <div className="text-center">
+            <p className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
+              No projects found.
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -30,9 +46,27 @@ export const Projects = ({ darkMode, projects, loading, onProjectClick }) => {
                   {project.description}
                 </p>
                 <div className="flex items-center justify-between">
-                  <span className={`text-sm px-4 py-2 rounded-full font-medium bg-gradient-to-r ${project.color} text-white`}>
-                    {project.language}
-                  </span>
+                  <div className="flex items-center gap-4">
+                    <span className={`text-sm px-4 py-2 rounded-full font-medium bg-gradient-to-r ${project.color} text-white`}>
+                      {project.language}
+                    </span>
+                    {project.stars > 0 && (
+                      <div className="flex items-center gap-1">
+                        <Star size={16} className={darkMode ? 'text-yellow-400' : 'text-yellow-500'} />
+                        <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                          {project.stars}
+                        </span>
+                      </div>
+                    )}
+                    {project.forks > 0 && (
+                      <div className="flex items-center gap-1">
+                        <GitFork size={16} className={darkMode ? 'text-gray-400' : 'text-gray-600'} />
+                        <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                          {project.forks}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                   <ExternalLink size={20} className="text-purple-600" />
                 </div>
               </div>
